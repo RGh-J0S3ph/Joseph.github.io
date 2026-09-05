@@ -41,3 +41,5 @@
 
 ## 14. ¿Qué aprendizaje de esta actividad será necesario para continuar desarrollando GIFinder?
 - Fundamentalmente aprendi que la plantilla vanilla de Ts es un buen punto de partida para crear aplicaciones y sistemas, antes de empezar con la implementacion de frameworks.
+
+Fecha:04/09/2026
