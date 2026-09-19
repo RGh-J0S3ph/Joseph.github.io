@@ -5,6 +5,8 @@ export interface Gif {
     title: string;
     description?: string;
     url: string;
+    detailUrl?: string;
+    altText?: string;
     username?: string;
     tags: string[];
     rating: GifRating;
