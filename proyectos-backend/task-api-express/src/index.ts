@@ -1,9 +1,9 @@
-import { createTask, completeTask, listTasks, deleteTask } from './services/task.service.js';
+/*import { createTask, completeTask, listTasks, deleteTask } from './services/task.service.js';
 import { delay } from './utils/delay.js';
 import { getAppName } from './utils/env.js';
 
 const showTasks = (): void => {
-    const rows = listTasks().map((task) => ({
+    const rows = listTasks().map((task: ReturnType<typeof listTasks>[number]) => ({
         id: task.id,
         title: task.title,
         status: task.status,
@@ -39,3 +39,4 @@ main().catch((error: unknown) => {
     console.error('Error no controlado:', error);
     process.exitCode = 1;
 });
+*/
