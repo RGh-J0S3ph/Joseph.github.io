@@ -1,8 +1,6 @@
 import { Schema, model } from 'mongoose';
-
 export const TASK_STATUSES = ['pending', 'completed'] as const;
 export type TaskStatus = (typeof TASK_STATUSES)[number];
-
 export interface TaskPersistence {
     title: string;
     status: TaskStatus;
@@ -16,6 +14,11 @@ export interface Task {
     status: TaskStatus;
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface TaskUpdate {
+    title?: string;
+    status?: TaskStatus;
 }
 
 const taskSchema = new Schema<TaskPersistence>(
@@ -37,5 +40,5 @@ const taskSchema = new Schema<TaskPersistence>(
         versionKey: false
     }
 );
-
 export const TaskModel = model<TaskPersistence>('Task', taskSchema);
+
