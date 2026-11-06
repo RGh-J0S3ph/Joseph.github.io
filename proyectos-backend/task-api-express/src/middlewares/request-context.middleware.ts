@@ -1,10 +1,10 @@
-import {randomUUID} from 'node:crypto';
-import { response, type NextFunction, type Request, type Response } from 'express';
+import { randomUUID } from 'node:crypto';
+import type { NextFunction, Request, Response } from 'express';
 
 export const requestContext = (
     _req: Request,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
 ): void => {
     const requestId = randomUUID();
     res.locals.requestId = requestId;
