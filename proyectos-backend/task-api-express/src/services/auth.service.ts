@@ -3,6 +3,7 @@ import { AppError } from '../errors/app-error.js';
 import type { User } from '../models/user.js';
 import {
     createUserDocument,
+    findUserDocumentById,
     findUserDocumentByEmail,
     type UserDocument
 } from '../repositories/user.repository.js';
@@ -14,10 +15,8 @@ import type {
 } from '../types/auth.js';
 import { hashPassword, verifyPassword } from './password.service.js';
 import { createAccessToken } from './token.service.js';
-
 const DUMMY_PASSWORD_HASH =
     '$2b$12$ryC/a3t1mI7fqF6j4w3Z.OpHQerUsIQUPQYXvd4WSgCRuikv6IF82';
-
 const toUser = (document: UserDocument): User => ({
     id: document._id.toString(),
     name: document.name,
@@ -26,7 +25,6 @@ const toUser = (document: UserDocument): User => ({
     createdAt: document.createdAt,
     updatedAt: document.updatedAt
 });
-
 export const registerUser = async (
     input: RegisterInput
 ): Promise<RegisterResult> => {
@@ -48,7 +46,6 @@ export const registerUser = async (
     });
     return { user: toUser(document) };
 };
-
 export const loginUser = async (input: LoginInput): Promise<LoginResult> => {
     const email = input.email.trim().toLowerCase();
     const document = await findUserDocumentByEmail(email, true);
@@ -64,4 +61,15 @@ export const loginUser = async (input: LoginInput): Promise<LoginResult> => {
         tokenType: 'Bearer',
         expiresIn: env.JWT_EXPIRES_IN
     };
+};
+export const getAuthenticatedUser = async (userId: string): Promise<User> => {
+    const document = await findUserDocumentById(userId);
+    if (!document) {
+        throw new AppError(
+            'La cuenta asociada al token ya no está disponible.',
+            401,
+            'AUTHENTICATED_USER_NOT_FOUND'
+        );
+    }
+    return toUser(document);
 };
