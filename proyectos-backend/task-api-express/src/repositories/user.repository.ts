@@ -3,6 +3,7 @@ import { AppError } from '../errors/app-error.js';
 import { UserModel, type UserPersistence, type UserRole } from '../models/user.js';
 
 export type UserDocument = HydratedDocument<UserPersistence>;
+
 export interface CreateUserRecord {
     name: string;
     email: string;
@@ -64,3 +65,14 @@ export const findUserDocumentByEmail = async (
 export const createUserDocument = async (
     data: CreateUserRecord
 ): Promise<UserDocument> => execute(async () => UserModel.create(data));
+
+export const setUserRoleByEmail = async (
+    email: string,
+    role: UserRole
+): Promise<UserDocument | null> => execute(async () =>
+    UserModel.findOneAndUpdate(
+        { email },
+        { $set: { role } },
+        { new: true, runValidators: true }
+    )
+);
